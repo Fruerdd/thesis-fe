@@ -37,8 +37,8 @@ export function ConfidenceScatterChart({ data }: { data: Prediction[] }) {
       data.map((p) => ({
         leanConf: +(p.leanConfidence * 100).toFixed(1),
         intConf: +(p.intensityConfidence * 100).toFixed(1),
-        lean: p.predictedLean,
-        intensity: p.predictedIntensity,
+        lean: p.lean,
+        intensity: p.intensity,
         source: p.source,
         text: p.text.slice(0, 50) + "...",
       })),
@@ -116,9 +116,10 @@ export function ConfidenceScatterChart({ data }: { data: Prediction[] }) {
                   backgroundColor: "oklch(0.17 0.008 250)",
                   border: "1px solid oklch(0.25 0.01 250)",
                   borderRadius: "8px",
-                  color: "oklch(0.95 0.01 250)",
                   fontSize: 12,
                 }}
+                labelStyle={{ color: "oklch(0.95 0.01 250)" }}
+                itemStyle={{ color: "oklch(0.95 0.01 250)" }}
                 formatter={(value: number, name: string) => [
                   `${value}%`,
                   name,

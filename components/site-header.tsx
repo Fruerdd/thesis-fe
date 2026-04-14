@@ -8,6 +8,7 @@ import { Brain } from "lucide-react";
 const navItems = [
   { href: "/", label: "Home" },
   { href: "/dashboard", label: "Dashboard" },
+  { href: "/detect-bias", label: "Detect Bias" },
 ];
 
 export function SiteHeader() {

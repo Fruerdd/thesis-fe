@@ -10,34 +10,34 @@ export function HeroSection() {
       <div className="flex items-center gap-2 rounded-full border border-border bg-secondary px-4 py-1.5">
         <ScanSearch className="h-4 w-4 text-primary" />
         <span className="text-xs font-medium text-muted-foreground">
-          SSST Department of Computer Science
+          AI-Powered Media Analysis
         </span>
       </div>
 
       <h1 className="max-w-3xl text-balance text-4xl font-bold tracking-tight text-foreground md:text-5xl lg:text-6xl">
-        Detecting Political Bias in News with{" "}
-        <span className="text-primary">AI</span>
+        Understand the Political Bias Behind{" "}
+        <span className="text-primary">Any News</span>
       </h1>
 
       <p className="max-w-2xl text-pretty text-base leading-relaxed text-muted-foreground md:text-lg">
-        A hierarchical multi-task BERT model for classifying political leaning
-        and bias intensity in news articles and headlines, with built-in
-        interpretability through chunk attention and integrated gradients.
+        Paste a headline or article and instantly see its political leaning,
+        bias intensity, and exactly which words and phrases are driving the
+        result — powered by a fine-tuned transformer model.
       </p>
 
       <div className="flex items-center gap-3">
         <Button asChild size="lg">
-          <Link href="/dashboard">
-            View Dashboard
+          <Link href="/detect-bias">
+            Try It Now
             <ArrowRight className="ml-2 h-4 w-4" />
           </Link>
         </Button>
+        <Button asChild variant="outline" size="lg">
+          <Link href="/dashboard">
+            View Dashboard
+          </Link>
+        </Button>
       </div>
-
-      <p className="text-xs text-muted-foreground">
-        Pavel Kuznetsov &middot; Prof. Jasminka Hasic &middot; Academic Year
-        2025/2026
-      </p>
     </section>
   );
 }

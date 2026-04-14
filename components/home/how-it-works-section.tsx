@@ -4,27 +4,27 @@ import { FileInput, Layers, Brain, BarChart3 } from "lucide-react";
 const steps = [
   {
     icon: FileInput,
-    title: "Input & Preprocessing",
+    title: "Paste Your Text",
     description:
-      "Raw text is cleaned, deterministic bias features (hedges, intensifiers, negations, punctuation, uppercase ratio) are extracted, and the text is split into overlapping chunks.",
+      "Submit any news headline or full article. The tool accepts text of any length — from a single sentence to a multi-paragraph story.",
   },
   {
     icon: Layers,
-    title: "Hierarchical Chunking",
+    title: "Deep Text Analysis",
     description:
-      "Long articles are tokenized into fixed-size chunks with [CLS]/[SEP] tokens. Each chunk is encoded independently by BERT, then aggregated via attention pooling.",
+      "The model reads your text in segments, capturing both the overall narrative and the subtle word choices that signal political framing.",
   },
   {
     icon: Brain,
-    title: "Multi-Task Classification",
+    title: "Bias Classification",
     description:
-      "Gated fusion combines transformer embeddings with projected bias features. Two task heads predict political leaning (5 classes) and bias intensity (3 classes).",
+      "An AI model trained on thousands of labeled articles identifies the political leaning (Left, Center-Left, Center, Center-Right, Right) and how strongly biased the text is.",
   },
   {
     icon: BarChart3,
-    title: "Interpretability Output",
+    title: "Explainable Results",
     description:
-      "Chunk attention weights reveal which document segments drove the prediction. Optional Integrated Gradients provide token-level attribution for fine-grained explanation.",
+      "See exactly which sentences and words contributed most to the prediction, so you can understand the reasoning — not just the label.",
   },
 ];
 
@@ -36,8 +36,8 @@ export function HowItWorksSection() {
           How It Works
         </h2>
         <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">
-          The pipeline processes text through four stages, from raw input to
-          explainable predictions.
+          From a single paste to a full breakdown in seconds — here's what
+          happens under the hood.
         </p>
       </div>
 

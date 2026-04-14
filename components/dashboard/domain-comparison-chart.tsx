@@ -90,9 +90,10 @@ export function DomainComparisonChart({ data }: { data: Prediction[] }) {
                   backgroundColor: "oklch(0.17 0.008 250)",
                   border: "1px solid oklch(0.25 0.01 250)",
                   borderRadius: "8px",
-                  color: "oklch(0.95 0.01 250)",
                   fontSize: 12,
                 }}
+                labelStyle={{ color: "oklch(0.95 0.01 250)" }}
+                itemStyle={{ color: "oklch(0.95 0.01 250)" }}
                 formatter={(value: number) =>
                   metric === "avgConfidence" ? `${value}%` : value
                 }

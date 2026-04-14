@@ -32,7 +32,7 @@ export function IntensityDistributionChart({
   const chartData = useMemo(() => {
     const counts: Record<string, number> = {};
     for (const l of INTENSITY_LABELS) counts[l] = 0;
-    for (const p of data) counts[p.predictedIntensity]++;
+    for (const p of data) counts[p.intensity]++;
     return INTENSITY_LABELS.map((l) => ({
       name: l,
       count: counts[l],
@@ -92,9 +92,10 @@ export function IntensityDistributionChart({
                     backgroundColor: "oklch(0.17 0.008 250)",
                     border: "1px solid oklch(0.25 0.01 250)",
                     borderRadius: "8px",
-                    color: "oklch(0.95 0.01 250)",
                     fontSize: 12,
                   }}
+                  labelStyle={{ color: "oklch(0.95 0.01 250)" }}
+                  itemStyle={{ color: "oklch(0.95 0.01 250)" }}
                 />
                 <Bar dataKey="count" radius={[4, 4, 0, 0]}>
                   {chartData.map((entry) => (
@@ -124,9 +125,10 @@ export function IntensityDistributionChart({
                     backgroundColor: "oklch(0.17 0.008 250)",
                     border: "1px solid oklch(0.25 0.01 250)",
                     borderRadius: "8px",
-                    color: "oklch(0.95 0.01 250)",
                     fontSize: 12,
                   }}
+                  labelStyle={{ color: "oklch(0.95 0.01 250)" }}
+                  itemStyle={{ color: "oklch(0.95 0.01 250)" }}
                 />
               </PieChart>
             )}

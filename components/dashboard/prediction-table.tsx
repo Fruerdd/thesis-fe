@@ -53,7 +53,7 @@ export function PredictionTable({ data }: { data: Prediction[] }) {
   const filtered = useMemo(() => {
     let items = [...data];
     if (intensityFilter !== "all") {
-      items = items.filter((p) => p.predictedIntensity === intensityFilter);
+      items.filter((p) => p.intensity === intensityFilter)
     }
     items.sort((a, b) => {
       const av = a[sortField];
@@ -156,15 +156,15 @@ export function PredictionTable({ data }: { data: Prediction[] }) {
                       variant="secondary"
                       className="text-[10px] font-mono whitespace-nowrap"
                     >
-                      {p.predictedLean}
+                      {p.lean}  
                     </Badge>
                   </TableCell>
                   <TableCell>
                     <Badge
-                      variant={intensityVariant[p.predictedIntensity]}
+                      variant={intensityVariant[p.intensity]}
                       className="text-[10px] font-mono whitespace-nowrap"
                     >
-                      {p.predictedIntensity}
+                      {p.intensity}
                     </Badge>
                   </TableCell>
                   <TableCell className="font-mono text-xs text-foreground">

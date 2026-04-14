@@ -1,36 +1,31 @@
-import { predictions, LEAN_LABELS, INTENSITY_LABELS } from "@/lib/data";
 import { Card, CardContent } from "@/components/ui/card";
 import {
   BarChart3,
   Target,
-  FileText,
-  Layers,
+  Zap,
+  ShieldCheck,
 } from "lucide-react";
 
 const stats = [
   {
-    label: "Predictions Analyzed",
-    value: predictions.length,
-    icon: FileText,
-  },
-  {
-    label: "Leaning Classes",
-    value: LEAN_LABELS.length,
+    label: "Political Lean Categories",
+    value: "5",
     icon: BarChart3,
   },
   {
-    label: "Intensity Classes",
-    value: INTENSITY_LABELS.length,
-    icon: Layers,
+    label: "Bias Intensity Levels",
+    value: "3",
+    icon: Target,
   },
   {
-    label: "Avg Confidence",
-    value:
-      (
-        predictions.reduce((s, p) => s + p.leanConfidence, 0) /
-        predictions.length
-      ).toFixed(0) + "%",
-    icon: Target,
+    label: "Avg. Analysis Time",
+    value: "< 2s",
+    icon: Zap,
+  },
+  {
+    label: "Explainable Predictions",
+    value: "100%",
+    icon: ShieldCheck,
   },
 ];
 

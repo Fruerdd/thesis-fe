@@ -17,61 +17,60 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import type { Prediction } from "@/lib/data";
+import { LEAN_LABELS, INTENSITY_LABELS, type Prediction } from "@/lib/data";
 
-type AggMode = "mean" | "max";
-
-const featureKeys = [
-  "hedges",
-  "intensifiers",
-  "negations",
-  "punctuation",
-  "uppercaseRatio",
-  "quotationUsage",
-] as const;
-
-const featureLabels: Record<(typeof featureKeys)[number], string> = {
-  hedges: "Hedges",
-  intensifiers: "Intensifiers",
-  negations: "Negations",
-  punctuation: "Punctuation",
-  uppercaseRatio: "Uppercase",
-  quotationUsage: "Quotation",
-};
+type ProfileMode = "lean" | "intensity";
 
 export function BiasFeatureRadarChart({ data }: { data: Prediction[] }) {
-  const [aggMode, setAggMode] = useState<AggMode>("mean");
+  const [mode, setMode] = useState<ProfileMode>("lean");
 
   const chartData = useMemo(() => {
     if (data.length === 0) {
-      return featureKeys.map((k) => ({ feature: featureLabels[k], value: 0 }));
+      const labels = mode === "lean" ? LEAN_LABELS : INTENSITY_LABELS;
+      return labels.map((l) => ({ feature: l, value: 0 }));
     }
-    return featureKeys.map((k) => {
-      const values = data.map((p) => p.biasFeatures[k]);
-      const agg =
-        aggMode === "mean"
-          ? values.reduce((a, b) => a + b, 0) / values.length
-          : Math.max(...values);
-      return { feature: featureLabels[k], value: +agg.toFixed(2) };
-    });
-  }, [data, aggMode]);
+
+    if (mode === "lean") {
+      // average leanConfidence for each lean class across all predictions
+      return LEAN_LABELS.map((label) => {
+        const matching = data.filter((p) => p.lean === label);
+        const avg =
+          matching.length > 0
+            ? matching.reduce((s, p) => s + p.leanConfidence, 0) /
+              matching.length
+            : 0;
+        return { feature: label, value: +( avg * 100).toFixed(1) };
+      });
+    } else {
+      // average intensityConfidence for each intensity class
+      return INTENSITY_LABELS.map((label) => {
+        const matching = data.filter((p) => p.intensity === label);
+        const avg =
+          matching.length > 0
+            ? matching.reduce((s, p) => s + p.intensityConfidence, 0) /
+              matching.length
+            : 0;
+        return { feature: label, value: +(avg * 100).toFixed(1) };
+      });
+    }
+  }, [data, mode]);
 
   return (
     <Card className="border-border bg-card">
       <CardHeader className="flex flex-row items-center justify-between pb-2">
         <CardTitle className="text-sm font-semibold">
-          Bias Feature Profile
+          Confidence Profile
         </CardTitle>
         <Select
-          value={aggMode}
-          onValueChange={(v) => setAggMode(v as AggMode)}
+          value={mode}
+          onValueChange={(v) => setMode(v as ProfileMode)}
         >
-          <SelectTrigger className="h-7 w-24 text-xs bg-secondary text-foreground">
+          <SelectTrigger className="h-7 w-28 text-xs bg-secondary text-foreground">
             <SelectValue />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="mean">Mean</SelectItem>
-            <SelectItem value="max">Max</SelectItem>
+            <SelectItem value="lean">By Lean</SelectItem>
+            <SelectItem value="intensity">By Intensity</SelectItem>
           </SelectContent>
         </Select>
       </CardHeader>
@@ -85,7 +84,7 @@ export function BiasFeatureRadarChart({ data }: { data: Prediction[] }) {
                 tick={{ fill: "oklch(0.6 0.02 250)", fontSize: 10 }}
               />
               <Radar
-                name="Features"
+                name="Avg Confidence %"
                 dataKey="value"
                 stroke="oklch(0.65 0.18 195)"
                 fill="oklch(0.65 0.18 195)"
@@ -97,9 +96,11 @@ export function BiasFeatureRadarChart({ data }: { data: Prediction[] }) {
                   backgroundColor: "oklch(0.17 0.008 250)",
                   border: "1px solid oklch(0.25 0.01 250)",
                   borderRadius: "8px",
-                  color: "oklch(0.95 0.01 250)",
                   fontSize: 12,
                 }}
+                labelStyle={{ color: "oklch(0.95 0.01 250)" }}
+                itemStyle={{ color: "oklch(0.95 0.01 250)" }}
+                formatter={(value: number) => [`${value}%`, "Avg Confidence"]}
               />
             </RadarChart>
           </ResponsiveContainer>

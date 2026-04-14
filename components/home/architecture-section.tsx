@@ -1,63 +1,52 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 
-const architectureBlocks = [
+const featureBlocks = [
   {
-    title: "Transformer Encoder",
-    tag: "BERT-base",
+    title: "Transformer-Based Understanding",
+    tag: "BERT",
     items: [
-      "Encodes each chunk independently",
-      "[CLS] embedding as chunk representation",
-      "Supports up to 256 tokens per chunk",
+      "Fine-tuned on political news datasets",
+      "Understands context, not just keywords",
+      "Handles long articles through smart chunking",
     ],
   },
   {
-    title: "Chunk Attention Pooling",
-    tag: "Aggregation",
+    title: "Dual Classification",
+    tag: "Multi-Task",
     items: [
-      "Attention score per chunk",
-      "Weighted sum produces document embedding",
-      "Handles variable-length documents",
+      "Political leaning: Left → Right (5 categories)",
+      "Bias intensity: Neutral, Moderate, High",
+      "Both predictions from a single pass",
     ],
   },
   {
-    title: "Gated Fusion",
-    tag: "Feature Merge",
+    title: "Linguistic Signals",
+    tag: "Feature Extraction",
     items: [
-      "Projects 12-dim bias features to hidden space",
-      "Learnable gate g in [0,1]",
-      "fused = g * doc_emb + (1-g) * feat_emb",
+      "Detects hedging language and intensifiers",
+      "Flags emotional or loaded phrasing",
+      "Measures punctuation and capitalization patterns",
     ],
   },
   {
-    title: "Multi-Task Heads",
-    tag: "Classification",
+    title: "Transparent Explanations",
+    tag: "Interpretability",
     items: [
-      "Lean head: 5-way (Left to Right)",
-      "Intensity head: 3-way (Neutral to Highly Biased)",
-      "Domain head: 2-way with Gradient Reversal",
+      "Highlights the most influential text segments",
+      "Token-level attribution shows word importance",
+      "No black-box decisions — you see the reasoning",
     ],
   },
 ];
 
-const trainingDetails = [
-  { label: "Optimizer", value: "AdamW" },
-  { label: "Schedule", value: "Linear warmup" },
-  { label: "Loss", value: "Masked cross-entropy" },
-  { label: "W_lean", value: "1.0" },
-  { label: "W_intensity", value: "1.0" },
-  { label: "W_domain", value: "0.2" },
-];
-
-const dataSources = [
-  {
-    name: "Dataset A (Headlines)",
-    description: "Short text segments labeled with political leaning",
-  },
-  {
-    name: "Dataset B (Articles)",
-    description: "Longer texts labeled with bias intensity",
-  },
+const highlights = [
+  { label: "Political Lean Classes", value: "5" },
+  { label: "Bias Intensity Levels", value: "3" },
+  { label: "Explainability", value: "Built-in" },
+  { label: "Max Input Length", value: "Unlimited" },
+  { label: "Analysis Speed", value: "< 2 sec" },
+  { label: "Domains Supported", value: "Cross-domain" },
 ];
 
 export function ArchitectureSection() {
@@ -65,16 +54,16 @@ export function ArchitectureSection() {
     <section className="mx-auto w-full max-w-7xl px-6 py-16">
       <div className="mb-10 flex flex-col gap-2">
         <h2 className="text-2xl font-bold tracking-tight text-foreground">
-          Model Architecture
+          What Makes It Reliable
         </h2>
         <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">
-          A hierarchical multi-task bias model with four major blocks, domain
-          adaptation, and interpretability.
+          Built on modern NLP research, the tool combines deep language
+          understanding with interpretable outputs you can actually trust.
         </p>
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">
-        {architectureBlocks.map((block) => (
+        {featureBlocks.map((block) => (
           <Card key={block.title} className="border-border bg-card">
             <CardHeader className="flex flex-row items-center gap-3 pb-2">
               <CardTitle className="text-sm font-semibold">
@@ -104,46 +93,26 @@ export function ArchitectureSection() {
         ))}
       </div>
 
-      <div className="mt-8 grid gap-4 md:grid-cols-2">
+      <div className="mt-8">
         <Card className="border-border bg-card">
           <CardHeader className="pb-2">
             <CardTitle className="text-sm font-semibold">
-              Training Configuration
+              At a Glance
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-2 gap-2">
-              {trainingDetails.map((d) => (
-                <div key={d.label} className="flex flex-col gap-0.5">
-                  <span className="text-[10px] text-muted-foreground uppercase tracking-wider">
-                    {d.label}
+            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-6">
+              {highlights.map((h) => (
+                <div key={h.label} className="flex flex-col gap-0.5">
+                  <span className="font-mono text-sm font-bold text-foreground">
+                    {h.value}
                   </span>
-                  <span className="font-mono text-xs text-foreground">
-                    {d.value}
+                  <span className="text-[10px] uppercase tracking-wider text-muted-foreground">
+                    {h.label}
                   </span>
                 </div>
               ))}
             </div>
-          </CardContent>
-        </Card>
-
-        <Card className="border-border bg-card">
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-semibold">
-              Data Sources
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-col gap-3">
-            {dataSources.map((ds) => (
-              <div key={ds.name} className="flex flex-col gap-0.5">
-                <span className="text-xs font-medium text-foreground">
-                  {ds.name}
-                </span>
-                <span className="text-xs text-muted-foreground">
-                  {ds.description}
-                </span>
-              </div>
-            ))}
           </CardContent>
         </Card>
       </div>

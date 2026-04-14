@@ -22,7 +22,7 @@ export function LeanDistributionChart({ data }: { data: Prediction[] }) {
   const chartData = useMemo(() => {
     const counts: Record<string, number> = {};
     for (const l of LEAN_LABELS) counts[l] = 0;
-    for (const p of data) counts[p.predictedLean]++;
+    for (const p of data) counts[p.lean]++;
     const arr = LEAN_LABELS.map((l) => ({ name: l, count: counts[l] }));
     if (sortByCount) arr.sort((a, b) => b.count - a.count);
     return arr;
@@ -70,9 +70,10 @@ export function LeanDistributionChart({ data }: { data: Prediction[] }) {
                   backgroundColor: "oklch(0.17 0.008 250)",
                   border: "1px solid oklch(0.25 0.01 250)",
                   borderRadius: "8px",
-                  color: "oklch(0.95 0.01 250)",
                   fontSize: 12,
                 }}
+                labelStyle={{ color: "oklch(0.95 0.01 250)" }}
+                itemStyle={{ color: "oklch(0.95 0.01 250)" }}
               />
               <Bar dataKey="count" radius={[4, 4, 0, 0]}>
                 {chartData.map((entry) => (
